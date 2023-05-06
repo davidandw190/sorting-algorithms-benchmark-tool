@@ -16,11 +16,6 @@ def selection_sort(arr):
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
     return arr
 
-def end(arr):
-    i = 0
-    for i in range(1000):
-        i += 1
-    return [1, 2, 3]
 
 def insertion_sort(arr):
     n = len(arr)
@@ -34,34 +29,38 @@ def insertion_sort(arr):
     return arr
 
 
-def merge(arr, l, m, r):
-    n1 = m - l + 1
-    n2 = r - m
-    L = [0] * n1
-    R = [0] * n2
-    for i in range(n1):
-        L[i] = arr[l + i]
-    for j in range(n2):
-        R[j] = arr[m + 1 + j]
-    i = 0
-    j = 0
-    k = l
-    while i < n1 and j < n2:
-        if L[i] <= R[j]:
-            arr[k] = L[i]
+def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        i = j = k = 0
+
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                arr[k] = left_half[i]
+                i += 1
+            else:
+                arr[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            arr[k] = left_half[i]
             i += 1
-        else:
-            arr[k] = R[j]
+            k += 1
+
+        while j < len(right_half):
+            arr[k] = right_half[j]
             j += 1
-        k += 1
-    while i < n1:
-        arr[k] = L[i]
-        i += 1
-        k += 1
-    while j < n2:
-        arr[k] = R[j]
-        j += 1
-        k += 1
+            k += 1
+
+    return arr
+
 
 def quick_sort(arr):
     if len(arr) <= 1:
@@ -143,3 +142,34 @@ def radix_sort(arr):
         counting_sort(arr, exp)
         exp *= 10
     return arr
+
+def bucket_sort(arr):
+    """
+    Sorts a list of numbers using bucket sort.
+
+    :param arr: List of numbers to be sorted.
+    :return: Sorted list of numbers.
+    """
+    # Find the maximum value in the list
+    max_value = max(arr)
+
+    # Create empty buckets
+    buckets = [[] for _ in range(max_value // 10 + 1)]
+
+    # Assign each element to a bucket based on its value
+    for num in arr:
+        buckets[num // 10].append(num)
+
+    # Sort each bucket using insertion sort
+    for i in range(len(buckets)):
+        buckets[i].sort()
+
+    # Concatenate the sorted buckets
+    sorted_arr = []
+    for bucket in buckets:
+        sorted_arr += bucket
+
+    return sorted_arr
+
+def tim_sort(arr):
+    return sorted(arr)
