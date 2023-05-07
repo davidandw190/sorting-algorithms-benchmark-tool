@@ -114,21 +114,20 @@ def heapify(arr, n, i):
         arr[i], arr[largest] = arr[largest], arr[i]
         heapify(arr, n, largest)
 
-
 def counting_sort(arr, exp):
     n = len(arr)
     output = [0] * n
     count = [0] * 10
 
     for i in range(n):
-        index = arr[i] // exp
+        index = int(arr[i] // exp)
         count[index % 10] += 1
 
     for i in range(1, 10):
         count[i] += count[i-1]
 
     for i in range(n-1, -1, -1):
-        index = arr[i] // exp
+        index = int(arr[i] // exp)
         output[count[index % 10] - 1] = arr[i]
         count[index % 10] -= 1
 
@@ -150,26 +149,39 @@ def bucket_sort(arr):
     :param arr: List of numbers to be sorted.
     :return: Sorted list of numbers.
     """
-    # Find the maximum value in the list
-    max_value = max(arr)
+    # Find the minimum and maximum values in the list
+    min_value = int(min(arr))
+    max_value = int(max(arr))
+
+    # Determine the range of values and size of each bucket
+    range_values = max_value - min_value + 1
+    bucket_size = 10
+    num_buckets = (range_values + bucket_size - 1) // bucket_size
 
     # Create empty buckets
-    buckets = [[] for _ in range(max_value // 10 + 1)]
+    buckets = [[] for _ in range(num_buckets)]
 
     # Assign each element to a bucket based on its value
     for num in arr:
-        buckets[num // 10].append(num)
+        bucket_index = int((num - min_value) // bucket_size)
+        buckets[bucket_index].append(num)
 
     # Sort each bucket using insertion sort
-    for i in range(len(buckets)):
+    for i in range(num_buckets):
         buckets[i].sort()
 
     # Concatenate the sorted buckets
     sorted_arr = []
-    for bucket in buckets:
-        sorted_arr += bucket
+    if min_value < 0:
+        sorted_arr += buckets[0]
+        for i in range(1, num_buckets):
+            sorted_arr += buckets[i]
+    else:
+        for bucket in buckets:
+            sorted_arr += bucket
 
     return sorted_arr
+
 
 def tim_sort(arr):
     return sorted(arr)

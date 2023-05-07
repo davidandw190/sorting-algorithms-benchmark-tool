@@ -9,6 +9,7 @@ import itertools
 
 from algorithms import *
 
+
 def generate_data(n: int, data_type: str) -> pd.Series:
     if data_type == 'sorted':
         return pd.Series(np.arange(n))
@@ -216,103 +217,179 @@ def plot_raw_data_area(data_types, sizes):
         plt.savefig(f'raw_data/raw_data_area_plot_1000_group{j+1}.pdf', dpi=300, bbox_inches='tight', pad_inches=0.2)
         plt.clf()
 
+
+
 # def plot_results(results, data_types):
 #     alg_colors = {
 #         'selection_sort': 'tab:blue',
 #         'insertion_sort': 'tab:orange',
-#         'quick_sort': 'tab:green'
+#         'quick_sort': 'tab:green',
+#         'merge_sort': 'tab:red',
+#         'bubble_sort': 'tab:purple',
+#         'heap_sort': 'tab:brown',
+#         'radix_sort': 'tab:pink',
+#         'bucket_sort': 'tab:gray',
+#         'tim_sort': 'tab:olive'
 #     }
 #
+#     markers, line_styles = ['o', 's', 'D', 'P', 'v', 'd', '+', '^', ], ['-', '--', '-.', ':', '-']
+#     sns.set_context('paper', font_scale=1.2)
+#     sns.set(style='whitegrid')
 #     for data_type in data_types:
-#         fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(8, 10), dpi=300)
-#
+#         fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(10, 12), dpi=300)
+#         sns.set_style("whitegrid", {'axes.grid': True, 'grid.linestyle': '-.', 'grid.color': 'black'})
 #         axs[0].set_title(f'Average Running Time on {data_type.capitalize()} Data', fontsize=18)
 #         axs[0].set_xlabel('Dataset Size', fontsize=14)
-#         axs[0].set_ylabel('Average Running Time (seconds)', fontsize=14)
+#         axs[0].set_ylabel('Average Running Time (s)', fontsize=14)
 #         axs[0].tick_params(axis='both', which='major', labelsize=12)
-#         axs[0].grid(True)
+#         axs[0].set_xscale('log')
+#         axs[0].set_yscale('log')
 #         for algorithm, df in results.items():
 #             agg_df = df[df['Data Type'] == data_type].groupby('Size')['Time'].agg(['mean', 'std']).reset_index()
-#             axs[0].plot(agg_df['Size'], agg_df['mean'], label=algorithm.capitalize(), marker='o',
-#                         color=alg_colors[algorithm])
+#             sns.lineplot(x='Size', y='mean', data=agg_df, label=algorithm.replace('_', ' ').capitalize(),
+#                          marker=markers[list(alg_colors.keys()).index(algorithm)],
+#                          color=alg_colors[algorithm], linewidth=1.5, markersize=7, ax=axs[0],
+#                          linestyle=line_styles[list(alg_colors.keys()).index(algorithm)])
 #             axs[0].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'] + agg_df['std'],
 #                                 alpha=0.2, color=alg_colors[algorithm])
-#         axs[0].legend(loc='best', fontsize=12)
-#
+#         axs[0].legend(loc='upper left', fontsize=10, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
 #         axs[1].set_title(f'Average Memory Usage on {data_type.capitalize()} Data', fontsize=18)
 #         axs[1].set_xlabel('Dataset Size', fontsize=14)
 #         axs[1].set_ylabel('Average Memory Usage (KB)', fontsize=14)
 #         axs[1].tick_params(axis='both', which='major', labelsize=12)
-#         axs[1].grid(True)
+#         axs[1].set_xscale('log')
+#         for algorithm, df in results.items():
+#             sns.set_style("whitegrid", {'axes.grid': True, 'grid.linestyle': '-.', 'grid.color': 'black'})
+#             agg_df = df[df['Data Type'] == data_type].groupby('Size')['Memory Usage'].agg(['mean', 'std']).reset_index()
+#             sns.scatterplot(x='Size', y='mean', data=agg_df, label=algorithm.replace('_', ' ').capitalize(),
+#                             marker=markers[list(alg_colors.keys()).index(algorithm)],
+#                             color=alg_colors[algorithm], linewidth=1.5, edgecolor='black', s=60, ax=axs[1])
+#             axs[1].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'], alpha=0.2,
+#                                  color=alg_colors[algorithm])
+#         axs[1].legend(loc='upper left', fontsize=10, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
+#         for ax in axs:
+#             ax.spines['bottom'].set_color('black')
+#             ax.spines['left'].set_color('black')
+#             ax.spines['top'].set_color('black')
+#             ax.spines['right'].set_color('black')
+#             ax.tick_params(axis='both', which='major', labelcolor='black', labelsize=12)
+#         fig.subplots_adjust(hspace=0.5)
+#         fig.savefig(os.path.join('plots', f'{data_type}_plot.pdf'), dpi=300, bbox_inches='tight')
+#         plt.show()
+
+# def plot_results(results, data_types):
+#     alg_colors = {'selection_sort': 'tab:blue', 'insertion_sort': 'tab:orange'}
+#     markers, line_styles = ['o', 's'], ['-', '--']
+#     sns.set(style='whitegrid', context='paper', font_scale=1.2, palette=list(alg_colors.values()))
+#     for data_type in data_types:
+#         fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(10, 12), dpi=300)
+#         sns.set_style("whitegrid", {'axes.grid': True, 'grid.linestyle': '-.', 'grid.color': 'black'})
+#         axs[0].set_title(f'Average Running Time on {data_type.capitalize()} Data', fontsize=18)
+#         axs[0].set_xlabel('Dataset Size', fontsize=14)
+#         axs[0].set_ylabel('Average Running Time (s)', fontsize=14)
+#         axs[0].tick_params(axis='both', which='major', labelsize=12)
+#         for algorithm, df in results.items():
+#             agg_df = df[df['Data Type'] == data_type].groupby('Size')['Time'].agg(['mean', 'std']).reset_index()
+#             sns.lineplot(x=agg_df['Size'], y=agg_df['mean'], label=algorithm.capitalize(),
+#                          marker=markers[list(alg_colors.keys()).index(algorithm)],
+#                          color=alg_colors[algorithm], linewidth=1.5, markersize=6, ax=axs[0])
+#             axs[0].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'] + agg_df['std'],
+#                                 alpha=0.2, color=alg_colors[algorithm])
+#         axs[0].legend(loc='upper left', fontsize=12, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
+#         axs[1].set_title(f'Average Memory Usage on {data_type.capitalize()} Data', fontsize=18)
+#         axs[1].set_xlabel('Dataset Size', fontsize=14)
+#         axs[1].set_ylabel('Average Memory Usage (KB)', fontsize=14)
+#         axs[1].tick_params(axis='both', which='major', labelsize=12)
 #         for algorithm, df in results.items():
 #             agg_df = df[df['Data Type'] == data_type].groupby('Size')['Memory Usage'].agg(['mean', 'std']).reset_index()
-#             axs[1].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'],
-#                                 alpha=0.2, color=alg_colors[algorithm], label=algorithm.capitalize())
-#             axs[1].fill_between(agg_df['Size'], agg_df['mean'], agg_df['mean'] + agg_df['std'],
-#                                 alpha=0.2, color=alg_colors[algorithm])
-#         axs[1].legend(loc='best', fontsize=12)
-#
-#         fig.tight_layout()
-#         fig.savefig(os.path.join('plots', f'{data_type}_plot.png'), dpi=300)
-#         plt.show()
-#         plt.close(fig)
+#             sns.lineplot(x=agg_df['Size'], y=agg_df['mean'], label=algorithm.capitalize(),
+#                          marker=markers[list(alg_colors.keys()).index(algorithm)],
+#                          color=alg_colors[algorithm], linewidth=1.5, markersize=6, ax=axs[1])
+#             axs[1].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'] + agg_df['std'],
+#                                  alpha=0.2, color=alg_colors[algorithm])
+#         axs[1].legend(loc='upper left', fontsize=12, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
+#         for ax in axs:
+#             ax.spines['bottom'].set_color('black')
+#             ax.spines['left'].set_color('black')
+#             ax.spines['top'].set_visible(False)
+#             ax.spines['right'].set_visible(False)
+#             ax.tick_params(axis='both', which='major', labelcolor='black', labelsize=12)
+#             fig.subplots_adjust(hspace=0.5)
+#             fig.savefig(os.path.join('plots', f'{data_type}_plot.pdf'), dpi=300, bbox_inches='tight')
+#             plt.show()
 
+# ###############################################################################
 def plot_results(results, data_types):
     alg_colors = {
-        'selection_sort': 'tab:blue',
-        'insertion_sort': 'tab:orange',
-        'quick_sort': 'tab:green',
-        'merge_sort': 'tab:red',
-        'bubble_sort': 'tab:purple',
-        'heap_sort': 'tab:brown',
-        'radix_sort': 'tab:pink',
-        'bucket_sort': 'tab:gray',
-        'tim_sort': 'tab:olive'
+        'selection_sort': '#1f77b4',
+        'insertion_sort': '#ff7f0e',
+        'quick_sort': '#2ca02c',
+        'merge_sort': '#d62728',
+        'heap_sort': '#9467bd',
+        'radix_sort': '#8c564b',
+        'bucket_sort': '#e377c2',
+        'tim_sort': '#7f7f7f'
     }
-
-    markers = ['o', 's', '^', 'd', 'v', 'p', '*', 'h', '8']
-    line_styles = ['-', '--', '-.', ':', '-', '--', '-.', ':', '-']
-
-    sns.set(style='whitegrid', context='paper', font_scale=1.2, palette=sns.color_palette(list(alg_colors.values())))
+    markers, line_styles = ['o', 's', 'D', 'P', 'v', 'd', 'o', '^'], ['-', '--', '-.', ':', '-', '--', '-.', ':']
+    sns.set(style='whitegrid', context='paper', font_scale=1.2, palette=list(alg_colors.values()))
 
     for data_type in data_types:
 
         fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(10, 12), dpi=300)
+        sns.set_style("whitegrid", {'axes.grid': True, 'grid.linestyle': '-.', 'grid.color': 'grey'})
 
         axs[0].set_title(f'Average Running Time on {data_type.capitalize()} Data', fontsize=18)
         axs[0].set_xlabel('Dataset Size', fontsize=14)
         axs[0].set_ylabel('Average Running Time (s)', fontsize=14)
         axs[0].tick_params(axis='both', which='major', labelsize=12)
-        axs[0].grid(True, alpha=1, linewidth=1)
+
         for algorithm, df in results.items():
             agg_df = df[df['Data Type'] == data_type].groupby('Size')['Time'].agg(['mean', 'std']).reset_index()
-            axs[0].plot(agg_df['Size'], agg_df['mean'], label=algorithm.capitalize(),
-                        marker=markers[list(alg_colors.keys()).index(algorithm)],
-                        color=alg_colors[algorithm], linewidth=1.7, markersize=8, markeredgecolor='black',
-                        linestyle=line_styles[list(alg_colors.keys()).index(algorithm)])
+
+            # sns.lineplot(x=agg_df['Size'], y=agg_df['mean'], label=algorithm.capitalize(),
+            #              marker=markers[list(alg_colors.keys()).index(algorithm)],
+            #              color=alg_colors[algorithm], linewidth=2, markersize=7, ax=axs[0])
+
+            sns.lineplot(x=agg_df['Size'], y=agg_df['mean'], label=algorithm.capitalize(),
+                         marker=markers[list(alg_colors.keys()).index(algorithm)], color=alg_colors[algorithm],
+                         linewidth=2, markersize=7, ax=axs[0],
+                         linestyle=line_styles[list(alg_colors.keys()).index(algorithm)])
 
             axs[0].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'] + agg_df['std'],
-                                alpha=0.5, color=alg_colors[algorithm])
-        axs[0].legend(loc='upper left', fontsize=12, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
+                                alpha=0.2, color=alg_colors[algorithm])
+
+        axs[0].legend(loc='upper left', fontsize=10, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
 
         axs[1].set_title(f'Average Memory Usage on {data_type.capitalize()} Data', fontsize=18)
         axs[1].set_xlabel('Dataset Size', fontsize=14)
         axs[1].set_ylabel('Average Memory Usage (KB)', fontsize=14)
         axs[1].tick_params(axis='both', which='major', labelsize=12)
-        axs[1].grid(True, alpha=1, linewidth=1)
+
         for algorithm, df in results.items():
             agg_df = df[df['Data Type'] == data_type].groupby('Size')['Memory Usage'].agg(['mean', 'std']).reset_index()
-            axs[1].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'], alpha=0.2,
-                                color=alg_colors[algorithm])
-            axs[1].scatter(agg_df['Size'], agg_df['mean'], label=algorithm.capitalize(), marker=markers[list(alg_colors.keys()).index(algorithm)],
-                           color=alg_colors[algorithm], linewidth=1.5, edgecolor='black', s=60)
 
-            axs[1].legend(loc='upper left', fontsize=12, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
+            sns.scatterplot(x=agg_df['Size'], y=agg_df['mean'], label=algorithm.capitalize(),
+                            marker=markers[list(alg_colors.keys()).index(algorithm)],
+                            color=alg_colors[algorithm], linewidth=1, edgecolor='black', s=60, ax=axs[1])
+
+
+            axs[1].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'], alpha=0.2, color=alg_colors[algorithm])
+        axs[1].legend(loc='upper left', fontsize=10, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
 
         for ax in axs:
-            for spine in ax.spines.values():
-                spine.set_edgecolor('black')
-                spine.set_linewidth(1.2)
+
+            ax.spines['bottom'].set_color('black')
+            ax.spines['left'].set_color('black')
+            # ax.spines['top'].set_color('black')
+            # ax.spines['right'].set_color('black')
+
+            ax.spines['bottom'].set_linewidth(2)
+            ax.spines['left'].set_linewidth(2)
+            # ax.spines['top'].set_linewidth(2)
+            # ax.spines['right'].set_linewidth(2)
+
+            ax.tick_params(axis='both', which='major', labelcolor='black', labelsize=12)
+
         fig.subplots_adjust(hspace=0.3)
         fig.savefig(os.path.join('plots', f'{data_type}_plot.pdf'), dpi=300, bbox_inches='tight')
         plt.show()
@@ -321,8 +398,8 @@ def plot_results(results, data_types):
 def main():
     algorithms = [selection_sort, insertion_sort, merge_sort, quick_sort, heap_sort, radix_sort, bucket_sort, tim_sort]
     data_types = ['sorted', 'reverse', 'almost_sorted', 'reverse', 'unique', 'nonunique', 'float', 'negative']
-    sizes = [100, 250, 500, 750, 1000, 2500, 5000, 7500, 10_000, 12_000]
-    num_runs = 4
+    sizes = [100, 250, 500, 1000]
+    num_runs = 1
 
     if not os.path.exists('plots'):
         os.makedirs('plots')
