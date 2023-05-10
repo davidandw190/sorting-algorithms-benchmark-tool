@@ -71,7 +71,7 @@ def run_experiment(algorithms, data_types, sizes, num_runs):
                 elapsed_time = elapsed_time_sum / num_runs
                 memory_usage = memory_usage_sum / num_runs
 
-                # Check if elapsed time or memory usage is negligable
+                # Checks if elapsed time or memory usage is negligable
                 if elapsed_time == 0.0:
                     elapsed_time_csv = "negligible"
                 else:
@@ -100,95 +100,47 @@ def run_experiment(algorithms, data_types, sizes, num_runs):
 
     return results
 
+
 def plot_raw_data_area(data_types, sizes):
     cmap = plt.get_cmap('tab10', len(data_types))
     chunks = list(itertools.zip_longest(*[iter(data_types)] * 3, fillvalue=None))
     alpha = 0.5
+    num_groups = len(chunks)
 
     for j, group in enumerate(chunks):
-        fig, ax = plt.subplots(3, 1, figsize=(12, 8), sharey='True', dpi=300)
+        num_plots = len([dt for dt in group if dt is not None])
+        fig, ax = plt.subplots(num_plots, 1, figsize=(10, 5 * num_plots), sharex=True, dpi=300)
+
+        if num_plots == 1:  # Manually creates the 1D array if num_plots is 1
+            ax = [ax]
 
         for i, data_type in enumerate(group):
             if data_type is not None:
-                arr = generate_data(1000, data_type)
-                x = np.arange(1000)
+                arr = generate_data(sizes[j], data_type)
+                x = np.arange(sizes[j])
                 ax[i].fill_between(x, arr, color=cmap(data_types.index(data_type)), alpha=alpha, label=data_type)
                 ax[i].plot(x, arr, color='gray', linewidth=1)
-                ax[i].set_title(rf'{data_type.capitalize()} Data', fontsize=12, color='black')
-                ax[i].set_xlabel('Index', fontsize=12, color='black')
-                ax[i].set_ylabel('Value', fontsize=12, color='black')
-                ax[i].set_ylim([min(arr) - 0.1*(max(arr)-min(arr)), max(arr) + 0.1*(max(arr)-min(arr))])
-                ax[i].set_yticks([min(arr), max(arr)])
-                ax[i].legend(loc='upper right', fontsize=8)
+                ax[i].set_title(f'{data_type.capitalize()} Data', fontsize=16, color='black')
+                ax[i].set_xlabel('Index', fontsize=14, color='black')
+                ax[i].set_ylabel('Value', fontsize=14, color='black')
+                ax[i].set_ylim([min(arr) - 0.1 * (max(arr) - min(arr)), max(arr) + 0.1 * (max(arr) - min(arr))])
+                ax[i].set_yticks([min(arr), 0, max(arr)])
+                ax[i].grid(True)
+                ax[i].legend(loc='upper right', fontsize=12, frameon=False)
 
-        fig.suptitle(rf'Raw Data Area Plot - Group {j+1}', fontsize=14, color='black')
-        plt.tight_layout()
+        fig.suptitle(f'Raw Data Area Plot - Group {j + 1}', fontsize=20, color='black')
+        plt.tight_layout(pad=2)
+
+        # Adds a zero value bar
+        ax[-1].axhline(y=0, linestyle='-', color='black', linewidth=1)
 
         if not os.path.exists('raw_data'):
             os.makedirs('raw_data')
 
-        plt.savefig(f'raw_data/raw_data_area_plot_1000_group{j+1}.pdf', dpi=300, bbox_inches='tight', pad_inches=0.2)
+        plt.savefig(f'raw_data/raw_data_area_plot_group{j + 1}.pdf', dpi=300, bbox_inches='tight', pad_inches=0.2)
         plt.clf()
 
-# def plot_results(results, data_types):
-#     alg_colors = {
-#         'selection_sort': 'tab:blue',
-#         'insertion_sort': 'tab:orange',
-#         'quick_sort': 'tab:green',
-#         'merge_sort': 'tab:red',
-#         'bubble_sort': 'tab:purple',
-#         'heap_sort': 'tab:brown',
-#         'radix_sort': 'tab:pink',
-#         'bucket_sort': 'tab:gray',
-#         'tim_sort': 'tab:olive'
-#     }
-#
-#     markers, line_styles = ['o', 's', 'D', 'P', 'v', 'd', '+', '^', ], ['-', '--', '-.', ':', '-']
-#     sns.set_context('paper', font_scale=1.2)
-#     sns.set(style='whitegrid')
-#     for data_type in data_types:
-#         fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(10, 12), dpi=300)
-#         sns.set_style("whitegrid", {'axes.grid': True, 'grid.linestyle': '-.', 'grid.color': 'black'})
-#         axs[0].set_title(f'Average Running Time on {data_type.capitalize()} Data', fontsize=18)
-#         axs[0].set_xlabel('Dataset Size', fontsize=14)
-#         axs[0].set_ylabel('Average Running Time (s)', fontsize=14)
-#         axs[0].tick_params(axis='both', which='major', labelsize=12)
-#         axs[0].set_xscale('log')
-#         axs[0].set_yscale('log')
-#         for algorithm, df in results.items():
-#             agg_df = df[df['Data Type'] == data_type].groupby('Size')['Time'].agg(['mean', 'std']).reset_index()
-#             sns.lineplot(x='Size', y='mean', data=agg_df, label=algorithm.replace('_', ' ').capitalize(),
-#                          marker=markers[list(alg_colors.keys()).index(algorithm)],
-#                          color=alg_colors[algorithm], linewidth=1.5, markersize=7, ax=axs[0],
-#                          linestyle=line_styles[list(alg_colors.keys()).index(algorithm)])
-#             axs[0].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'] + agg_df['std'],
-#                                 alpha=0.2, color=alg_colors[algorithm])
-#         axs[0].legend(loc='upper left', fontsize=10, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
-#         axs[1].set_title(f'Average Memory Usage on {data_type.capitalize()} Data', fontsize=18)
-#         axs[1].set_xlabel('Dataset Size', fontsize=14)
-#         axs[1].set_ylabel('Average Memory Usage (KB)', fontsize=14)
-#         axs[1].tick_params(axis='both', which='major', labelsize=12)
-#         axs[1].set_xscale('log')
-#         for algorithm, df in results.items():
-#             sns.set_style("whitegrid", {'axes.grid': True, 'grid.linestyle': '-.', 'grid.color': 'black'})
-#             agg_df = df[df['Data Type'] == data_type].groupby('Size')['Memory Usage'].agg(['mean', 'std']).reset_index()
-#             sns.scatterplot(x='Size', y='mean', data=agg_df, label=algorithm.replace('_', ' ').capitalize(),
-#                             marker=markers[list(alg_colors.keys()).index(algorithm)],
-#                             color=alg_colors[algorithm], linewidth=1.5, edgecolor='black', s=60, ax=axs[1])
-#             axs[1].fill_between(agg_df['Size'], agg_df['mean'] - agg_df['std'], agg_df['mean'], alpha=0.2,
-#                                  color=alg_colors[algorithm])
-#         axs[1].legend(loc='upper left', fontsize=10, frameon=True, fancybox=True, facecolor='white', edgecolor='black')
-#         for ax in axs:
-#             ax.spines['bottom'].set_color('black')
-#             ax.spines['left'].set_color('black')
-#             ax.spines['top'].set_color('black')
-#             ax.spines['right'].set_color('black')
-#             ax.tick_params(axis='both', which='major', labelcolor='black', labelsize=12)
-#         fig.subplots_adjust(hspace=0.5)
-#         fig.savefig(os.path.join('plots', f'{data_type}_plot.pdf'), dpi=300, bbox_inches='tight')
-#         plt.show()
 
-# ###############################################################################
 def plot_results(results, data_types):
     alg_colors = {
         'selection_sort': '#1f77b4',
@@ -266,9 +218,11 @@ def plot_results(results, data_types):
 
 def main():
     algorithms = [selection_sort, insertion_sort, merge_sort, quick_sort, heap_sort, radix_sort, bucket_sort, tim_sort]
-    data_types = ['sorted', 'reverse', 'almost_sorted', 'reverse', 'unique', 'nonunique', 'float', 'negative']
-    sizes = [500, 750, 1000, 2500, 5000, 7500, 10_000, 12_500]
-    num_runs = 4
+    data_types = ['sorted', 'reverse', 'almost_sorted', 'unique', 'nonunique', 'float', 'negative']
+    sizes = [500, 750, 1000, 2500, 5000, 7500, 10_000, 12_000]
+    # sizes = [50, 100, 250, 500, 750, 1000, 1250, 1500]
+    # sizes = [500, 750, 1000]
+    num_runs = 8
 
     if not os.path.exists('plots'):
         os.makedirs('plots')
@@ -277,6 +231,7 @@ def main():
 
     results = run_experiment(algorithms, data_types, sizes, num_runs)
     plot_results(results, data_types)
+    plot_raw_data_area(data_types, sizes)
 
 
 if __name__ == "__main__":
