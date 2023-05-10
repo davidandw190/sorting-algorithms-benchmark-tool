@@ -1,3 +1,5 @@
+from typing import List
+
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -11,6 +13,28 @@ from algorithms import *
 
 
 def generate_data(n: int, data_type: str) -> pd.Series:
+    """
+    Generates data according to the specified type.
+
+    Args:
+    n (int): The number of data points to generate.
+    data_type (str): The type of data to generate. Must be one of the following:
+    - 'sorted': Returns a series of integers in ascending order from 0 to n-1.
+    - 'reverse': Returns a series of integers in descending order from n-1 to 0.
+    - 'unique': Returns a series of n unique integers randomly sampled from the range 0 to n-1.
+    - 'nonunique': Returns a series of n integers randomly sampled from the range 0 to n//2, with replacement.
+    - 'float': Returns a series of n floating-point numbers randomly sampled from the uniform distribution [0,1).
+    - 'negative': Returns a series of n floating-point numbers randomly sampled from a normal distribution with mean-n/2
+     and standard deviation n/6.
+    - 'almost_sorted': Returns a series of integers in ascending order from 0 to n-1, with 10% of adjacent pairs of
+    elements swapped.
+
+    Returns:
+    pd.Series: A pandas Series object containing the generated data.
+
+    Raises:
+    ValueError: If an invalid data_type argument is provided.
+    """
     if data_type == 'sorted':
         return pd.Series(np.arange(n))
     elif data_type == 'reverse':
@@ -33,7 +57,18 @@ def generate_data(n: int, data_type: str) -> pd.Series:
         raise ValueError('Invalid data type')
 
 
-def time_and_memory(func, arr):
+def time_and_memory(func: callable, arr: list) -> tuple:
+    """
+    Measures the time and memory usage of an algorithm applied to an array.
+
+    Args:
+    - func: a callable that takes an array as input and performs some operation.
+    - arr: a list or numpy array to be used as input to the function.
+
+    Returns:
+    - A tuple containing the elapsed time (in seconds) and peak memory usage (in kilobytes).
+    """
+
     start_time = time.monotonic()
     tracemalloc.start()
     func(arr)
@@ -45,7 +80,21 @@ def time_and_memory(func, arr):
     return elapsed_time, memory_usage
 
 
-def run_experiment(algorithms, data_types, sizes, num_runs):
+def run_experiment(algorithms: List[callable], data_types: List[str], sizes: List[int], num_runs: int) -> dict:
+    """Runs the experiments on the given set of algorithms, data types and sizes.
+
+    Args:
+    - algorithms: A list of callable objects representing algorithms to be tested.
+    - data_types: A list of strings representing data types to be generated for testing.
+    - sizes: A list of integers representing the sizes of data to be generated for testing.
+    - num_runs: The number of times to run each algorithm for each combination of data type and size.
+
+    Returns:
+    - A dictionary containing the results of the experiments, where the keys are the names of the algorithms and
+    the values are pandas DataFrames containing the experiment results.
+
+    """
+
     data, results, results_csv = {}, {}, {}
     for data_type in data_types:
         data[data_type] = {}
@@ -101,7 +150,17 @@ def run_experiment(algorithms, data_types, sizes, num_runs):
     return results
 
 
-def plot_raw_data_area(data_types, sizes):
+def plot_raw_data_area(data_types: List[str], sizes: List[int]) -> None:
+    """
+    Generates area plots of raw data for different data types and sizes.
+
+    Args:
+    - data_types: A list of strings specifying the data types to generate.
+    - sizes: A list of integers specifying the sizes of the data to generate.
+
+    Returns:
+    - None
+    """
     cmap = plt.get_cmap('tab10', len(data_types))
     chunks = list(itertools.zip_longest(*[iter(data_types)] * 3, fillvalue=None))
     alpha = 0.5
@@ -141,7 +200,19 @@ def plot_raw_data_area(data_types, sizes):
         plt.clf()
 
 
-def plot_results(results, data_types):
+def plot_results(results: dict, data_types: List[str]) -> None:
+    """
+    Plot the average running time and memory usage of sorting algorithms for different dataset sizes and types.
+
+    Args:
+    - results: A dictionary containing the sorting algorithm names as keys and data frames with sorting results
+    as values.
+    - data_types: A list of strings containing the names of the dataset types to plot.
+
+    Returns:
+    - None: The function plots and saves the results to a PDF file for each data type.
+    """
+
     alg_colors = {
         'selection_sort': '#1f77b4',
         'insertion_sort': '#ff7f0e',
