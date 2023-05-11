@@ -6,6 +6,7 @@ def bubble_sort(arr):
                 arr[j], arr[j+1] = arr[j+1], arr[j]
     return arr
 
+
 def selection_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -134,6 +135,7 @@ def counting_sort(arr, exp):
     for i in range(n):
         arr[i] = output[i]
 
+
 def radix_sort(arr):
     max_value = max(arr)
     exp = 1
@@ -141,6 +143,7 @@ def radix_sort(arr):
         counting_sort(arr, exp)
         exp *= 10
     return arr
+
 
 def bucket_sort(arr):
     """
