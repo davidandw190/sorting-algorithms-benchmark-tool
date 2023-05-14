@@ -100,6 +100,7 @@ def heap_sort(arr):
         heapify(arr, i, 0)
     return arr
 
+
 def heapify(arr, n, i):
     largest = i
     left = 2 * i + 1
@@ -114,6 +115,7 @@ def heapify(arr, n, i):
     if largest != i:
         arr[i], arr[largest] = arr[largest], arr[i]
         heapify(arr, n, largest)
+
 
 def counting_sort(arr, exp):
     n = len(arr)
