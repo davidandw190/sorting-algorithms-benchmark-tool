@@ -32,11 +32,7 @@ The Sorting Algorithms Testing Framework includes the following features:
 * Visualizations: The framework includes various visualization methods, such as computing plots and graphs, as well as csv files, to help researchers analyze the results.
 
 
-## Usage
-
-This section will guide you through the installation, configuration, usage, and customization of the program for your own use case.
-
-## Installation
+## SETUP
 
 To use the experimental framework, please follow these installation instructions:
 
@@ -81,7 +77,7 @@ if not os.path.exists('plots'):
 if not os.path.exists('csvs'):
     os.makedirs('csvs')
 ```    
-## Run
+## Usage
 To run the experiments and visualize the results, follow these steps:
 
 * Open a command line or terminal.
@@ -96,4 +92,5 @@ The program will execute the experiments using the configured parameters and gen
   * for each datatype given, a plot showcasing the `time perfromance` and `memory usage` of the algorithms on that datatype, by default found in `/plots`
   * for each algorithms given, a CSV file showcasing the average `time perfromance` and `memory usage` of the algorithm on each datatype  and size, by default found in `/csvs`
   * a group of area plots, number of which is determined by the number of dataypes used showcasing a sample of `raw data` used for the experiment, by default found in `/raw_data`
-
+ 
+## Contribution
