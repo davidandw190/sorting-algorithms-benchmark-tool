@@ -21,7 +21,7 @@ The Sorting Algorithms Testing Framework includes the following features:
 
 * Multiple Sorting Algorithms: The framework currently includes nine sorting algorithms, including Bubble Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Radix Sort, Counting Sort, Bucket Sort, and Tim Sort.
 
-* Various Test Cases: The framework supports testing on various test cases, including time performance, memory performance, and other performance metrics.
+* Various Test Cases: The framework supports testing on various test cases, including time performance and memory usage.
 
 * Different Data Sizes: The framework can test sorting algorithms on various data sizes, from small to large datasets.
 
@@ -29,7 +29,7 @@ The Sorting Algorithms Testing Framework includes the following features:
 
 * Different Data Distributions: The framework allows users to test sorting algorithms on different data distributions, such as random, sorted, and reverse sorted.
 
-* Visualizations: The framework includes various visualization methods, such as computing plots and graphs, as well as csv files, to help researchers analyze the results.
+* Visualizations: The framework includes various visualization methods, such as computing plots and graphs, as well as csv files, to help users analyze the results.
 
 
 ## SETUP
