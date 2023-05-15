@@ -6,36 +6,37 @@ This project was developed as a part of a research project in computer science, 
 
 ## Table of Contents
 
-  1. [FEATURES](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON/edit/master/README.md#features);
-  2. [SETUP](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON/edit/master/README.md#setup);
-  3. [CONFIGURATION](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON/edit/master/README.md#configuration);
-  4. [USAGE](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON/edit/master/README.md#usage);
-  5. [CONTRIBUTION](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON/edit/master/README.md#contribution);
+  1. [FEATURES](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON#features)
+  2. [SETUP](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON#setup)
+  3. [CONFIGURATION](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON#configuration)
+  4. [USAGE](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON#usage)
+  5. [CONTRIBUTION](https://github.com/davidandw190/Sorting-Algorithm-Exp-Framework-V2-PYTHON#contribution)
   
 
-## FEATURES
+## Features
 
 The Sorting Algorithms Testing Framework includes the following features:
 
-Multiple Sorting Algorithms: The framework currently includes nine sorting algorithms, including Bubble Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Radix Sort, Counting Sort, Bucket Sort, and Tim Sort.
+* Modular Design: The framework is composed of five modules, including data generation, algorithms, performance evaluation, experiment design, and visualization modules, allowing users to customize and extend the framework as needed.
 
-Various Test Cases: The framework supports testing on various test cases, including time performance, memory performance, and other performance metrics.
+* Multiple Sorting Algorithms: The framework currently includes nine sorting algorithms, including Bubble Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Radix Sort, Counting Sort, Bucket Sort, and Tim Sort.
 
-Different Data Sizes: The framework can test sorting algorithms on various data sizes, from small to large datasets.
+* Various Test Cases: The framework supports testing on various test cases, including time performance, memory performance, and other performance metrics.
 
-Different Data Types: The framework supports different data types, such as integers, floats, and strings.
+* Different Data Sizes: The framework can test sorting algorithms on various data sizes, from small to large datasets.
 
-Different Data Distributions: The framework allows users to test sorting algorithms on different data distributions, such as random, sorted, and reverse sorted.
+* Different Data Types: The framework supports different data types, such as integers, floats, and strings.
 
-Visualizations: The framework includes various visualization methods, such as computing plots and graphs, as well as csv files, to help researchers analyze the results.
+* Different Data Distributions: The framework allows users to test sorting algorithms on different data distributions, such as random, sorted, and reverse sorted.
 
-Modular Design: The framework is composed of five modules, including data generation, algorithms, performance evaluation, experiment design, and visualization modules, allowing users to customize and extend the framework as needed.
+* Visualizations: The framework includes various visualization methods, such as computing plots and graphs, as well as csv files, to help researchers analyze the results.
+
 
 ## Usage
 
 This section will guide you through the installation, configuration, usage, and customization of the program for your own use case.
 
-### Installation
+## Installation
 
 To use the experimental framework, please follow these installation instructions:
 
@@ -50,7 +51,7 @@ To use the experimental framework, please follow these installation instructions
    pip install -r requirements.txt
    ```
 
-### Configuration
+## Configuration
 
 Before running the experiments, you can configure certain parameters according to your specific needs. To do this, open the `main.py` file in a text editor and locate the `main` function.
 
@@ -80,7 +81,7 @@ if not os.path.exists('plots'):
 if not os.path.exists('csvs'):
     os.makedirs('csvs')
 ```    
-### Run
+## Run
 To run the experiments and visualize the results, follow these steps:
 
 * Open a command line or terminal.
