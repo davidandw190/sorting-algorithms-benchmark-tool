@@ -148,12 +148,6 @@ def radix_sort(arr):
 
 
 def bucket_sort(arr):
-    """
-    Sorts a list of numbers using bucket sort.
-
-    :param arr: List of numbers to be sorted.
-    :return: Sorted list of numbers.
-    """
     # Find the minimum and maximum values in the list
     min_value = int(min(arr))
     max_value = int(max(arr))

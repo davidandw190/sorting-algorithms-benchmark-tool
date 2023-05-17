@@ -1,10 +1,9 @@
 import itertools
-import os
-from typing import List
-
 import numpy as np
-from matplotlib import pyplot as plt
+import os
 
+from typing import List
+from matplotlib import pyplot as plt
 from data_generation_module.generate_data import generate_data
 
 

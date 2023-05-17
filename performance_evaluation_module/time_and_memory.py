@@ -1,5 +1,6 @@
-import tracemalloc
 import time
+import tracemalloc
+
 
 
 def time_and_memory(func: callable, arr: list) -> tuple:

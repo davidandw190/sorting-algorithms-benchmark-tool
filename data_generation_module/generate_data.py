@@ -44,4 +44,4 @@ def generate_data(n: int, data_type: str) -> pd.Series:
         data[swap_idx] = data[swap_idx + 1]
         return pd.Series(data)
     else:
-        raise ValueError('Invalid data type')
+        raise ValueError('Invalid data type.\n\nTry adding it in the "data_generation_module" first')
