@@ -29,7 +29,7 @@ The Sorting Algorithms Testing Framework includes the following features:
 * **Different Data Types:** The framework supports different data types, such as `INTEGERS`, `FLOATS`, `NEGATIVES`.
 
 * **Different Data Distributions:** The framework allows users to test sorting algorithms on different data distributions, such as: `SORTED`, `REVERSE`, `ALMOST SORTED`, `UNIQUE` and `NON-UNIQUE`.
-* 
+ 
 * **Visualizations:** The framework includes various visualization methods, such as computing detailed PDF plots and graphs, as well as CSV files, to help users analyze and compare the results.
 
 
