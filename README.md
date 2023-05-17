@@ -24,9 +24,9 @@ The Sorting Algorithms Testing Framework includes the following features:
 
 * **Various Test Cases:** The framework supports testing on various test cases, including `TIME PERFORMANCE` and `MEMORY USAGE`.
 
-* **Different Data Sizes:** The framework can test sorting algorithms on various data sizes, from *small* to *large* datasets.
+* **Different Data Sizes:** The framework can test sorting algorithms on various data sizes.
 
-* **Different Data Types:** The framework supports different data types, such as `INTEGERS`, `FLOATS`, `NEGATIVES`, as well as different data distributions, as:
+* **Different Data Types:** The framework supports different data types, such as `INTEGERS`, `FLOATS`, `NEGATIVES`.
 
 * **Different Data Distributions:** The framework allows users to test sorting algorithms on different data distributions, such as: `SORTED`, `REVERSE`, `ALMOST SORTED`, `UNIQUE` and `NON-UNIQUE`.
 * 
