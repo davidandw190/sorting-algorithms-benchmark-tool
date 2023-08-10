@@ -1,8 +1,8 @@
-# Sorting Algorithm Testing Framework V2 PYTHON
+# Sorting Algorithm Benchmarking Framework V2 PYTHON
 
-The Sorting Algorithms Testing Framework is a comprehensive and flexible testing platform built in Python to study the performance of various sorting algorithms on different test cases. This project is designed to be scalable, modular, and easy to use, and is aimed at conducting accurate and exhaustive evaluations of sorting algorithms properties, their performance, and their suitability for different use cases.
+The Sorting Algorithms Benchmarking Framework is a flexible and scalable benchmarking tool built in Python to study and compare the performance of various sorting algorithms under different test cases. This project is designed to be scalable, modular, and easy to use, and is aimed at conducting accurate and exhaustive evaluations of sorting algorithms' properties, their performance, and their suitability for use cases, examining their performances under conditions such as data sizes, data types, and data distributions.
 
-This project was developed as a part of a research project in computer science, which aimed to study sorting algorithms' behavior and performance. The Sorting Algorithms Testing Framework provides a variety of tools and visualization methods to help researchers analyze the performance of different sorting algorithms under different conditions such as data sizes, data types, and data distributions.
+This project was developed as a part of a research project during my Methods and Practices in Computer Science course in the first year of my Bachelor's Degree. The requirement of the project was to study sorting algorithms' behavior and performance.
 
 ## Table of Contents
 
@@ -26,9 +26,9 @@ The Sorting Algorithms Testing Framework includes the following features:
 
 * **Different Data Sizes:** The framework can test sorting algorithms on various data sizes.
 
-* **Different Data Types:** The framework supports different data types, such as `INTEGERS`, `FLOATS`, `NEGATIVES`.
+* **Different Data Types:** The framework supports different data types, such as `INTEGERS`, `FLOATS`, and `NEGATIVES`.
 
-* **Different Data Distributions:** The framework allows users to test sorting algorithms on different data distributions, such as: `SORTED`, `REVERSE`, `ALMOST SORTED`, `UNIQUE` and `NON-UNIQUE`.
+* **Different Data Distributions:** The framework allows users to test sorting algorithms on different data distributions, such as: `SORTED`, `REVERSE`, `ALMOST SORTED`, `UNIQUE`, and `NON-UNIQUE`.
  
 * **Visualizations:** The framework includes various visualization methods, such as computing detailed PDF plots and graphs, as well as CSV files, to help users analyze and compare the results.
 
